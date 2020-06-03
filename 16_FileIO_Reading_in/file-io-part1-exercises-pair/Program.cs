@@ -41,13 +41,20 @@ namespace file_io_part1_exercises_pair
                         // Brandon - C:\\NicePlace\\Alice.txt to copy and paste
                         // Joel - C:\\HappyPlace\\ALICE.txt 
 
-                        
-                        string[] ourArrayOfSexySentences = line.Split(new char[] { '.', '?', '!' });
 
-                        foreach (string sentences in ourArrayOfSexySentences)
+                        ///string[] ourArrayOfSexySentences = line.Split(new char[] { '.', '?', '!' });
+
+                        int i = 0;
+
+
+                        for (i = 0; i < line.Length - 1; i++)
                         {
-                            if (sentences != "")
+                            string punctuation = line.Substring(i, 2);
+
+
+                            if (punctuation == "! " || punctuation == ". " || punctuation == "? " || punctuation == "!\"" || punctuation == ".\"" || punctuation == "?\"")
                             {
+
                                 sentenceCount++;
 
                             }
