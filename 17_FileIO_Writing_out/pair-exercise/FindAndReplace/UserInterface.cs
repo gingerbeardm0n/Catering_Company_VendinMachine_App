@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+
 namespace FindAndReplace
 {
    public class UserInterface
@@ -28,9 +29,44 @@ namespace FindAndReplace
 
             string fileDestination = Console.ReadLine();
 
+            string replaceLine = "";
+
+            try
+            {
+                using (StreamReader sr = new StreamReader(filePath))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        string sourceLine = sr.ReadLine();
+
+                        replaceLine += sourceLine.Replace(searchPhrase, replacePhrase);
+                    }
+                }
+
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("ERROR: Program will exit now");
+                Console.WriteLine(e.Message);
+            }
+            try
+            {
+                using  (StreamWriter sw = new StreamWriter(fileDestination, false))
+                {
+                    sw.Write(replaceLine);
+                }
+
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("ERROR: Program will exit now");
+                Console.WriteLine(e.Message);
+            }
+            Console.WriteLine("Search & Replace Successful! New file has been created in desired loacation! CONGRATULATIONS!");
             Console.ReadLine();
 
         }
-
+                //C:\\HappyPlace\\ALICE.txt
+                //C:\\HappyPlace\\newALICE.txt
     }
 }
