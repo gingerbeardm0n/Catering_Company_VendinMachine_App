@@ -28,32 +28,27 @@ namespace file_io_part1_exercises_pair
                         string line = thisDoesntMatter.ReadLine();
 
                         string[] ourArrayOfSexyWords = line.Split(" ");
-                       
-                        wordCount += ourArrayOfSexyWords.Length;
-
-
-
-                        // C:\\NicePlace\\Alice.txt to copy and paste
-
                         
+                        foreach (string testString in ourArrayOfSexyWords)
+                        {
+                            if (testString != "" && testString != " ")
+                            {
+                                wordCount++;
+                            }
+                        }
+                        // Brandon - C:\\NicePlace\\Alice.txt to copy and paste
+                        // Joel - C:\\HappyPlace\\ALICE.txt 
 
                         if (line != "" && (line.Contains('.') || line.Contains('?') || line.Contains('!')))
                         {
-
                             string[] ourArrayOfSexySentences = line.Split(new char[] { '.', '?', '!' });
 
                             sentenceCount += ourArrayOfSexySentences.Length;
                         }
-
-
-                                                                                          
                     }
-
                     Console.WriteLine("Word Count: " + wordCount);
                     Console.WriteLine("Sentence Count: " + sentenceCount);
-
                 }
-
             }
 
             catch (IOException e) //catch a specific type of Exception
