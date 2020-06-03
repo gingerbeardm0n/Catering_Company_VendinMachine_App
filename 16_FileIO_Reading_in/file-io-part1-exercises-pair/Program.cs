@@ -30,40 +30,34 @@ namespace file_io_part1_exercises_pair
 
                         string[] ourArrayOfSexyWords = line.Split(" ");
 
-                        List<string> arrayList = new List<string>();
-
-                        foreach (string word in ourArrayOfSexyWords)
+                        
+                        foreach (string testString in ourArrayOfSexyWords)
                         {
-                            arrayList.Add(word);
-                            Console.WriteLine(arrayList);
+                            if (testString != "" && testString != " ")
+                            {
+                                wordCount++;
+                            }
                         }
-
-                       
-                        wordCount += ourArrayOfSexyWords.Length;
-
-
-
-                        // C:\\NicePlace\\Alice.txt to copy and paste
+                        // Brandon - C:\\NicePlace\\Alice.txt to copy and paste
+                        // Joel - C:\\HappyPlace\\ALICE.txt 
 
                         
+                        string[] ourArrayOfSexySentences = line.Split(new char[] { '.', '?', '!' });
 
-                        if (line != "" && (line.Contains('.') || line.Contains('?') || line.Contains('!')))
+                        foreach (string sentences in ourArrayOfSexySentences)
                         {
+                            if (sentences != "")
+                            {
+                                sentenceCount++;
 
-                            string[] ourArrayOfSexySentences = line.Split(new char[] { '.', '?', '!' });
-
-                            sentenceCount += ourArrayOfSexySentences.Length;
+                            }
                         }
 
-
-                                                                                          
+                        
                     }
-
                     Console.WriteLine("Word Count: " + wordCount);
                     Console.WriteLine("Sentence Count: " + sentenceCount);
-
                 }
-
             }
 
             catch (IOException e) //catch a specific type of Exception
