@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,15 @@ namespace file_io_part1_exercises_pair
                         string line = thisDoesntMatter.ReadLine();
 
                         string[] ourArrayOfSexyWords = line.Split(" ");
+
+                        List<string> arrayList = new List<string>();
+
+                        foreach (string word in ourArrayOfSexyWords)
+                        {
+                            arrayList.Add(word);
+                            Console.WriteLine(arrayList);
+                        }
+
                        
                         wordCount += ourArrayOfSexyWords.Length;
 
