@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace FindAndReplace
 {
-    class Program
+   public class UserInterface
     {
-        static void Main(string[] args)
+      
+       
+
+        public void Run()
         {
-
-            UserInterface userInterface = new UserInterface();
-            userInterface.Run();
-
             Console.WriteLine("Please enter a search phrase: ");
 
             string searchPhrase = Console.ReadLine();
@@ -27,7 +28,9 @@ namespace FindAndReplace
 
             string fileDestination = Console.ReadLine();
 
+            Console.ReadLine();
 
         }
+
     }
 }
