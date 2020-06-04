@@ -11,6 +11,8 @@ namespace Capstone
             //Do not change this code
             UserInterface userInterface = new UserInterface();
             userInterface.RunInterface();
+
+            Console.ReadLine();
         }
     }
 }

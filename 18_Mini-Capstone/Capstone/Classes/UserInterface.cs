@@ -15,19 +15,21 @@ namespace Capstone.Classes
 
         public void RunInterface()
         {
+
+            Catering items = new Catering();
+
             string userInput = "";
 
             MainMenu();
 
             userInput = Console.ReadLine();
 
-            bool done = false;
-            while (!done)
+            while (userInput != "3")
             {
                 switch (userInput)
                 {
                     case "1":
-                        // Display Catering Items - method?
+                        DisplayItems(items);
                         break;
 
                     case "2":
@@ -50,7 +52,6 @@ namespace Capstone.Classes
                         break;
 
                     case "3":
-                        done = true;
                         break;
 
                     default:
@@ -80,6 +81,18 @@ namespace Capstone.Classes
             Console.WriteLine("(1) Add Money");
             Console.WriteLine("(2) Select Products");
             Console.WriteLine("(3) Complete Transaction");
+        }
+
+        private void DisplayItems(Catering items)
+        {
+            CateringItem[] tempItem = items.ItemList; // to review later/ask Matt
+
+            for (int i = 0; i < tempItem.Length; i++)
+            {
+                Console.WriteLine(tempItem[i].ToString());
+            }
+
+            Console.ReadLine();
         }
     }
 }
