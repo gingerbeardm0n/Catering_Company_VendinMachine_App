@@ -15,19 +15,21 @@ namespace Capstone.Classes
 
         public void RunInterface()
         {
+
+            Catering items = new Catering();
+
             string userInput = "";
 
             MainMenu();
 
             userInput = Console.ReadLine();
 
-            bool done = false;
-            while (!done)
+            while (userInput != "3")
             {
                 switch (userInput)
                 {
                     case "1":
-                        // Display Catering Items - method?
+                        DisplayItems(items);
                         break;
 
                     case "2":
@@ -46,17 +48,25 @@ namespace Capstone.Classes
                             case "3":
                                 //Complete Transaction
                                 break;
+
+                                //also display balance
+
                         }
                         break;
 
                     case "3":
-                        done = true;
                         break;
 
                     default:
                         Console.WriteLine("Please make a valid selection");
                             break;
                 }
+
+                Console.WriteLine();
+
+                MainMenu();
+
+                userInput = Console.ReadLine();
             }
 
         }
@@ -81,5 +91,30 @@ namespace Capstone.Classes
             Console.WriteLine("(2) Select Products");
             Console.WriteLine("(3) Complete Transaction");
         }
+
+        private void DisplayItems(Catering items)
+        {
+            CateringItem[] tempItem = items.ItemList; // to review later/ask Matt
+
+            for (int i = 0; i < tempItem.Length; i++)
+            {
+                Console.WriteLine(tempItem[i].ToString());
+            }
+        }
+
+
+        //Add money method
+
+        int balance = 0;
+
+        public int AddMoney(string userInput)
+        {
+            int deposit = int.Parse(userInput);
+
+            balance += deposit;                
+
+            return balance;
+        }
+
     }
 }

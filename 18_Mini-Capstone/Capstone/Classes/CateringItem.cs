@@ -4,9 +4,44 @@ using System.Text;
 
 namespace Capstone.Classes
 {
+
+    // This class should contain the definition for one catering item
+
     public class CateringItem
     {
-        // This class should contain the definition for one catering item
+        public int quantity = 50;
+
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string Type { get; set; }
+        public int QuantityRemaining
+        {
+            get
+            {
+                return quantity;
+            }  //might need to change to private later
+        }
+
+        public CateringItem()
+        {
+
+        }
+
+        public CateringItem(string code, string name, decimal price, string type)
+        {
+            Code = code;
+            Name = name;
+            Price = price;
+            Type = type;
+                        
+        }
+
+        public override string ToString()
+        {
+            return Code + " - " + Name + " - " + "$" + Price.ToString() + " - " + Type + " - " +  "Quantity: " + QuantityRemaining;
+        }
+
 
     }
 }
