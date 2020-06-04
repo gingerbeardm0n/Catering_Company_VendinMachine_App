@@ -48,6 +48,9 @@ namespace Capstone.Classes
                             case "3":
                                 //Complete Transaction
                                 break;
+
+                                //also display balance
+
                         }
                         break;
 
@@ -58,6 +61,12 @@ namespace Capstone.Classes
                         Console.WriteLine("Please make a valid selection");
                             break;
                 }
+
+                Console.WriteLine();
+
+                MainMenu();
+
+                userInput = Console.ReadLine();
             }
 
         }
@@ -91,8 +100,21 @@ namespace Capstone.Classes
             {
                 Console.WriteLine(tempItem[i].ToString());
             }
-
-            Console.ReadLine();
         }
+
+
+        //Add money method
+
+        int balance = 0;
+
+        public int AddMoney(string userInput)
+        {
+            int deposit = int.Parse(userInput);
+
+            balance += deposit;                
+
+            return balance;
+        }
+
     }
 }

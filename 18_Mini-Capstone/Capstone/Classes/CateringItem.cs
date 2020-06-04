@@ -9,10 +9,19 @@ namespace Capstone.Classes
 
     public class CateringItem
     {
+        public int quantity = 50;
+
         public string Code { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Type { get; set; }
+        public int QuantityRemaining
+        {
+            get
+            {
+                return quantity;
+            }  //might need to change to private later
+        }
 
         public CateringItem()
         {
@@ -25,11 +34,12 @@ namespace Capstone.Classes
             Name = name;
             Price = price;
             Type = type;
+                        
         }
 
         public override string ToString()
         {
-            return Code + Name + Price.ToString() + Type;
+            return Code + " - " + Name + " - " + "$" + Price.ToString() + " - " + Type + " - " +  "Quantity: " + QuantityRemaining;
         }
 
 
