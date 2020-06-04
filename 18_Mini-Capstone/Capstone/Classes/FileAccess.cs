@@ -7,5 +7,9 @@ namespace Capstone.Classes
     public class FileAccess
     {
         // This class should contain any and all details of access to files
+        
+        private string fullPath = @"c:\Catering\cateringsystem.csv";
+
+
     }
 }
