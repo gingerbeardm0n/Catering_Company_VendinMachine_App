@@ -15,13 +15,71 @@ namespace Capstone.Classes
 
         public void RunInterface()
         {
+            string userInput = "";
+
+            MainMenu();
+
+            userInput = Console.ReadLine();
+
             bool done = false;
             while (!done)
             {
-                Console.WriteLine("This is the UserInterface");
-                Console.ReadLine();
+                switch (userInput)
+                {
+                    case "1":
+                        // Display Catering Items - method?
+                        break;
+
+                    case "2":
+                        PurchaseMenu();
+
+                        switch (userInput)
+                        {
+                            case "1":
+                                //Add money - method? also track for log
+                                break;
+
+                            case "2":
+                                //Select Products - also track for log
+                                break;
+
+                            case "3":
+                                //Complete Transaction
+                                break;
+                        }
+                        break;
+
+                    case "3":
+                        done = true;
+                        break;
+
+                    default:
+                        Console.WriteLine("Please make a valid selection");
+                            break;
+                }
             }
 
+        }
+
+
+
+
+
+        //Methods
+
+        private void MainMenu()
+        {
+            Console.WriteLine("(1) Display Catering Items");
+            Console.WriteLine("(2) Order");
+            Console.WriteLine("(3) Quit");
+        }
+
+
+        private void PurchaseMenu()
+        {
+            Console.WriteLine("(1) Add Money");
+            Console.WriteLine("(2) Select Products");
+            Console.WriteLine("(3) Complete Transaction");
         }
     }
 }
