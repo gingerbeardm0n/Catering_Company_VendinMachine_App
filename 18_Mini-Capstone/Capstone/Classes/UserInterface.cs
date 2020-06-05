@@ -34,24 +34,38 @@ namespace Capstone.Classes
 
                     case "2":
                         PurchaseMenu();
+                        userInput = Console.ReadLine();
 
-                        switch (userInput)
+                        while (userInput != "3" )
                         {
-                            case "1":
-                                //Add money - method? also track for log
-                                break;
 
-                            case "2":
-                                //Select Products - also track for log
-                                break;
+                            switch (userInput)
+                            {
+                                case "1":
+                                    Console.WriteLine("Please enter deposit amount (must be an integer)");
+                                    userInput = Console.ReadLine();
+                                    AddMoney(userInput);
+                                    break;
 
-                            case "3":
-                                //Complete Transaction
-                                break;
+                                case "2":
+                                    //Select Products - also track for log
+                                    break;
 
-                                //also display balance
+                                case "3":
+                                    //Complete Transaction
+                                    break;
 
+                            }
+
+                            Console.WriteLine(); //blank line
+
+                            PurchaseMenu();
+
+                            userInput = Console.ReadLine();
+                        
+                        
                         }
+
                         break;
 
                     case "3":
@@ -59,10 +73,10 @@ namespace Capstone.Classes
 
                     default:
                         Console.WriteLine("Please make a valid selection");
-                            break;
+                        break;
                 }
 
-                Console.WriteLine();
+                Console.WriteLine(); //blank line
 
                 MainMenu();
 
@@ -90,6 +104,7 @@ namespace Capstone.Classes
             Console.WriteLine("(1) Add Money");
             Console.WriteLine("(2) Select Products");
             Console.WriteLine("(3) Complete Transaction");
+            Console.WriteLine("Current Account Balance: $" + balance);
         }
 
         private void DisplayItems(Catering items)
@@ -106,12 +121,32 @@ namespace Capstone.Classes
         //Add money method
 
         int balance = 0;
+        int deposit = 0;
 
-        public int AddMoney(string userInput)
+        public int AddMoney(string userInput) //log everytime money is added
         {
-            int deposit = int.Parse(userInput);
 
-            balance += deposit;                
+            try
+            {
+                deposit = int.Parse(userInput);
+
+                if (deposit >= 0 && deposit + balance <= 5000)
+
+                {
+                    balance += deposit;
+                }
+                else
+                {
+                    Console.WriteLine("Balance must be between 0 and 5000");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Nice try but please enter an integer");
+            }
+
+
+            Console.WriteLine("Your account balance is: " + "$" + balance);
 
             return balance;
         }
