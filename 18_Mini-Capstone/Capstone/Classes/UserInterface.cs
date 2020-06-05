@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace Capstone.Classes
 {
     public class UserInterface
@@ -49,6 +50,12 @@ namespace Capstone.Classes
 
                                 case "2":
                                     //Select Products - also track for log
+                                    Console.WriteLine("Please enter valid product code");
+                                    userInput = Console.ReadLine();
+                                    Console.WriteLine("Please enter desired quantity");
+                                    string strQuantityDesired = Console.ReadLine();
+                                    int intQuantityDesired = int.Parse(strQuantityDesired);
+                                    CheckProductCode(userInput);
                                     break;
 
                                 case "3":
@@ -83,6 +90,11 @@ namespace Capstone.Classes
                 userInput = Console.ReadLine();
             }
 
+        }
+
+        private void CheckProductCode(string userInput)
+        {
+            throw new NotImplementedException();
         }
 
 
