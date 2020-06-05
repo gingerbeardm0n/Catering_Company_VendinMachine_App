@@ -12,24 +12,29 @@ namespace Capstone.Classes
         // ALL instances of Console.ReadLine and Console.WriteLine should 
         // be in this class
 
-        //decimal balance = 0;
-        //int deposit = 0;
+        
 
         private Catering catering = new Catering();
 
         Catering items = new Catering();
+        CateringItem cateringItem = new CateringItem();
         public void RunInterface()
         {
 
 
             string userInput = "";
 
+
+
+            bool isFinished = false;
+            while (!isFinished)
+
+            { 
             MainMenu();
 
             userInput = Console.ReadLine();
 
-            while (userInput != "3")
-            {
+            
                 switch (userInput)
                 {
                     case "1":
@@ -37,11 +42,15 @@ namespace Capstone.Classes
                         break;
 
                     case "2":
-                        PurchaseMenu();
-                        userInput = Console.ReadLine();
+                       
 
-                        while (userInput != "3")
+                        bool isDone = false;
+                        while (!isDone)
                         {
+
+                            PurchaseMenu();
+
+                            userInput = Console.ReadLine();
 
                             switch (userInput)
                             {
@@ -51,34 +60,57 @@ namespace Capstone.Classes
                                     string addMoneyMessage = items.AddMoney(userInput);
                                     Console.WriteLine(addMoneyMessage);
 
+
                                     break;
                                 case "2":
 
                                     Console.WriteLine("Please enter valid product code");
-                                    string productCode = Console.ReadLine();
+                                    string checkProduct = Console.ReadLine();
 
                                     Console.WriteLine("Please enter desired quantity");
                                     string strQuantityDesired = Console.ReadLine();
 
-                                    int intQuantityDesired = int.Parse(strQuantityDesired);
+                                    cateringItem.IntQuantityDesired = int.Parse(strQuantityDesired);
 
-                                    string checkProductMessage = items.CheckProductCode(userInput, intQuantityDesired);
-                                    Console.WriteLine(checkProductMessage); //string message variable here
+                                    string checkProductMessage = items.CheckProductCode(checkProduct, cateringItem.IntQuantityDesired);
+                                    Console.WriteLine(checkProductMessage);
+
+                                    if (checkProductMessage == "Purchased!")
+                                    {
+                                        items.Purchase(cateringItem.IntQuantityDesired, items.Balance);
+                                    }
+
+
 
                                     break;
                                 case "3":
-                                    //Complete Transaction
+                                    //items.UpdateTotalCost(cateringItem.IntQuantityDesired);
+                                    string cashBack = items.GiveChange(items.Balance);
+                                    Console.WriteLine(cashBack);
+                                    string printList = items.PrintPurchases(items.PurchasedItems);
+                                    Console.WriteLine(printList); // this needs resolved
+
+                                    string checkOut = items.BalanceToZero();
+                                    Console.WriteLine(checkOut);
+
+                                    Console.WriteLine("Press enter to return");
+                                    Console.ReadLine();
+                                    isDone = true;
+
+                                    break;
+
+                                default:
+                                    Console.WriteLine("Please make a valid selection");
                                     break;
                             }
                             Console.WriteLine(); //blank line
 
-                            PurchaseMenu();
-
-                            userInput = Console.ReadLine();
+                           
                         }
                         break;
 
                     case "3":
+                        isFinished = true;
                         break;
                     default:
                         Console.WriteLine("Please make a valid selection");
@@ -87,9 +119,7 @@ namespace Capstone.Classes
 
                 Console.WriteLine(); //blank line
 
-                MainMenu();
-
-                userInput = Console.ReadLine();
+               
             }
 
         }
@@ -109,6 +139,7 @@ namespace Capstone.Classes
             Console.WriteLine("(2) Select Products");
             Console.WriteLine("(3) Complete Transaction");
             Console.WriteLine("Current Account Balance: $" + items.Balance);
+            Console.WriteLine(); //Blank line
         }
 
         private void DisplayItems(Catering items)
@@ -120,70 +151,6 @@ namespace Capstone.Classes
                 Console.WriteLine(tempItem[i].ToString());
             }
         }
-
-
-        //decimal balance = 0;  --> this variable is define at top of UserInterface class
-        //int deposit = 0;  --> this variable is define at top of UserInterface class
-
-        //private void AddMoney(string userInput) //log everytime money is added // Joel changed return type to void
-        //{
-        //    try
-        //    {
-        //        deposit = int.Parse(userInput);
-
-        //        if (deposit >= 0 && deposit + balance <= 5000)
-
-        //        {
-        //            balance += deposit;
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("Balance must be between 0 and 5000");
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine("");
-        //        Console.WriteLine("!!!!!!!!!!!!!!!!ERROR!!!!!!!!!!!!!!!!");
-        //        Console.WriteLine("Nice Try But Please Enter An Integer");
-        //        Console.WriteLine("!!!!!!!!!!!!!!!!ERROR!!!!!!!!!!!!!!!!");
-        //        Console.WriteLine("");
-        //    }
-        //    Console.WriteLine("Your account balance is: " + "$" + balance);
-
-        //    //return balance; - Joel commenting out to see if we can out purchase menu as the return to
-        //    //                  have it just loop back to the purchase menu anytime we add money
-
-        //}
-
-        //List<CateringItem> purchasedItems = new List<CateringItem>();
-
-        //public List<CateringItem> CheckProductCode(string userInput, int intQuantityDesired)
-        //{
-        //    foreach (CateringItem itemObj in items)
-
-        //        if ((itemObj.Code == userInput) &&
-        //           (itemObj.QuantityRemaining >= intQuantityDesired) &&
-        //           (intQuantityDesired * itemObj.Price <= balance)) //balance is 0 here because it's being set in UserInterface
-        //        {
-        //            CateringItem tempObject = new CateringItem();
-        //            tempObject.Type = itemObj.Type;
-        //            tempObject.Name = itemObj.Name;
-        //            tempObject.Price = itemObj.Price;
-
-        //            purchasedItems.Add(tempObject);
-
-        //            decimal cost = intQuantityDesired * itemObj.Price;
-
-        //            balance -= cost;
-        //        }
-
-        //    //else - send to UserInterface for messages (PRODUCT CODE NOT FOUND/SOLD OUT/NOT ENOUGH PRODUCT/INSUFFICIENT FUNDS)
-
-        //    return purchasedItems;
-
-
-        //}
 
     }
 }

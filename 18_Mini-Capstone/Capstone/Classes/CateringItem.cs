@@ -15,11 +15,12 @@ namespace Capstone.Classes
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Type { get; set; }
+        public int IntQuantityDesired { get; set; }
         public int QuantityRemaining
         {
             get
             {
-                return quantity;
+                return quantity - IntQuantityDesired;
             }  //might need to change to private later
         }
 

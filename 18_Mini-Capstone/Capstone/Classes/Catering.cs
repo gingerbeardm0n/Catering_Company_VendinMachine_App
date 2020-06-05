@@ -4,16 +4,29 @@ using System.Text;
 
 namespace Capstone.Classes
 {
+
+
     public class Catering
     {
+        CateringItem purchasedItem = new CateringItem();
+
         // make constructor that reads catering file and adds to list
         // This class should contain all the "work" for catering
 
         public decimal Balance { get; private set; }
 
-        public Catering (decimal balance)
+
+
+
+        public decimal TotalCost { get; private set; }
+
+        public List<CateringItem> PurchasedItems { get; } = new List<CateringItem>();
+
+
+        public Catering(decimal balance, decimal totalCost)
         {
             Balance = balance;
+            TotalCost = totalCost;
         }
 
         private List<CateringItem> items = new List<CateringItem>();
@@ -37,13 +50,12 @@ namespace Capstone.Classes
             FileAccess fa = new FileAccess();
             return fa.ReadItems();
         }
-        
+
         //method
-        
+
         //AddMoney Method
-        
-        private decimal balance = 0;
-        
+
+
         public string AddMoney(string userInput) //log everytime money is added
         {
             int deposit = 0;
@@ -51,64 +63,171 @@ namespace Capstone.Classes
             {
                 deposit = int.Parse(userInput);
 
-                if (deposit >= 0 && deposit + balance <= 5000)
+                if (deposit >= 0 && deposit + Balance <= 5000)
 
                 {
-                    balance += deposit;
+                    Balance += deposit;
                 }
                 else
                 {
-                    return "Balance must be between 0 and 5000";
+                    return "Balance must be between 0 and $5000";
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return "You must enter an integer";
             }
-            return "Your account balance is: " + "$" + balance;
-            
+            return "Your account balance is: " + "$" + Balance;
+
         }
 
-        //switch case 2.2 in UserInterface
-        
-        //if product code does not exist, customer is informed and return to Purchase menu
 
-        // JOEL COMMENTING OUT CheckProductCode METHOD b/c I moved it over to UserInterface
 
-        List<CateringItem> purchasedItems = new List<CateringItem>();
+
 
         public string CheckProductCode(string productCode, int intQuantityDesired)
         {
-            string tempString1 = "";
-            string tempString2 = "";
-            string tempString3 = "";
-            string tempString4 = "";
-
             foreach (CateringItem itemObj in items)
             {
+
+                if ((productCode == itemObj.Code) && (itemObj.QuantityRemaining >= intQuantityDesired) && ((intQuantityDesired * itemObj.Price) < Balance))
+                {
+
+                    purchasedItem.IntQuantityDesired = itemObj.IntQuantityDesired;
+                    purchasedItem.Code = itemObj.Code;
+                    purchasedItem.Name = itemObj.Name;
+                    purchasedItem.Price = itemObj.Price;
+                    purchasedItem.Type = itemObj.Type;
+
+                    PurchasedItems.Add(purchasedItem);
+
+                    return "Purchased!";
+                }
+
                 if (productCode == itemObj.Code)
                 {
-                    tempString1 = "";
+
+                    if (itemObj.QuantityRemaining == 0)
+                    {
+                        return "SOLD OUT";
+                    }
+
+                    if (itemObj.QuantityRemaining < intQuantityDesired)
+                    {
+                        return "INSUFFICIENT STOCK";
+                    }
+
+                    if (intQuantityDesired * itemObj.Price > Balance)
+                    {
+                        return "INSUFFICIENT FUNDS";
+                    }
                 }
-                else
-                {
-                    return "Product code does NOT exist";
-                }
-                if (itemObj.QuantityRemaining == 0)
-                {
-                    return "SOLD OUT";
-                }
-                if (itemObj.QuantityRemaining < intQuantityDesired)
-                {
-                    return "Not enough quantity of items remaining for desired amount";
-                }
-                if ( (intQuantityDesired * itemObj.Price) > balance)
-                {
-                    return "You a broke ass mutha trucka, go borrow money from Matt Eland, I hear the Java students are filthly rich!!!";
-                }
+
             }
-            return tempString1;
+
+            return "Product code not found";
+
         }
+
+        public void Purchase(int intQuantityDesired, decimal balance)
+        {
+            Balance -= (purchasedItem.Price * intQuantityDesired);
+        
+        }
+
+        //public decimal UpdateTotalCost(int intQuantityDesired)
+        //{
+        //    foreach (CateringItem item in purchasedItems)
+        //    {
+        //        TotalCost += (item.Price * intQuantityDesired);
+        //    }
+
+        //    return TotalCost;
+        //}
+
+        public string PrintPurchases(List<CateringItem> purchasedItems)
+        {
+            string result = "";
+
+            foreach (CateringItem item in purchasedItems)
+            {
+                result += item.IntQuantityDesired + "   " + item.Type + "   " + item.Name + "   " + "$" + item.Price + "   " + "$" + (item.IntQuantityDesired * item.Price) + "\n";
+            }
+
+            return result;
+        }
+
+        public string BalanceToZero()
+        {
+            Balance = 0;
+            return "Your change has been returned and your balance is $0. Thank you!";
+        }
+
+
+        public string GiveChange(decimal balance)
+        {
+            decimal cashBack = balance;
+
+
+
+            int twenties = 0;
+            int tens = 0;
+            int fives = 0;
+            int ones = 0;
+            int quarters = 0;
+            int dimes = 0;
+            int nickels = 0;
+
+            twenties = (int)cashBack / 20;
+            tens = (int)(cashBack - (twenties * 20)) / 10;
+            fives = (int)(cashBack - ((twenties * 20) + (tens * 10))) / 5;
+            ones = (int)cashBack - ((twenties * 20) + (tens * 10) + (fives * 5));
+
+            int intToDecimal = (int)cashBack;
+            decimal coinChange = cashBack - intToDecimal;
+
+            int toFigureNumberOfCoins = (int)(coinChange * 100);
+
+            quarters = toFigureNumberOfCoins / 25;
+            dimes = (toFigureNumberOfCoins - (quarters * 25)) / 10;
+            nickels = ((toFigureNumberOfCoins - (quarters * 25) + (dimes * 10)) / 5);
+
+            return "Your change is: " + twenties + " Twenty Dollar Bill(s), " + tens + " Ten(s), " + fives + " Five(s), " + ones + " One(s), " + quarters + " Quarter(s), " + dimes + " Dime(s), " + nickels + " Nickel(s)";
+
+
+        }
+
+        //  equals = false;
+
+        // }
+        //    foreach (CateringItem itemObj in items)
+        //    {
+        //        if (itemObj.QuantityRemaining == 0)
+        //        {
+        //           tempString = "SOLD OUT";
+        //        }
+        //    }
+        //    foreach (CateringItem itemObj in items)
+        //    {
+        //        if (itemObj.QuantityRemaining < intQuantityDesired)
+        //        {
+        //            tempString = "Not enough quantity of items remaining for desired amount";
+        //        }
+        //    }
+        //    foreach (CateringItem itemObj in items)
+        //    {
+        //        if ((intQuantityDesired * itemObj.Price) > Balance)
+        //        {
+        //            tempString = "You a broke ass mutha trucka, go borrow money from Matt Eland, I hear the Java students are filthly rich!!!";
+        //        }
+
+        //        tempString = "Product purchased!";
+
+        //    }
+
+
+        //    return tempString;
+        //}
 
 
 
