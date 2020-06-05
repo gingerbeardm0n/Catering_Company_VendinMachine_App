@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace Capstone.Classes
 {
     public class UserInterface
@@ -9,7 +10,9 @@ namespace Capstone.Classes
         // This class provides all user communications, but not much else.
         // All the "work" of the application should be done elsewhere
         // ALL instances of Console.ReadLine and Console.WriteLine should 
-        // be in this class.
+        // be in this class
+
+        decimal balance = 0;
 
         private Catering catering = new Catering();
 
@@ -36,7 +39,7 @@ namespace Capstone.Classes
                         PurchaseMenu();
                         userInput = Console.ReadLine();
 
-                        while (userInput != "3" )
+                        while (userInput != "3")
                         {
 
                             switch (userInput)
@@ -44,14 +47,19 @@ namespace Capstone.Classes
                                 case "1":
                                     Console.WriteLine("Please enter deposit amount (must be an integer)");
                                     userInput = Console.ReadLine();
-                                    AddMoney(userInput);
+                                    Catering temp = new Catering();
+                                    balance = temp.AddMoney(userInput);
                                     break;
 
                                 case "2":
-                                    Console.WriteLine("Please enter product code");
+
+                                    Console.WriteLine("Please enter valid product code");
                                     userInput = Console.ReadLine();
-                                    SelectProducts();
-                                    //Select Products - also track for log
+                                    Console.WriteLine("Please enter desired quantity");
+                                    string strQuantityDesired = Console.ReadLine();
+                                    int intQuantityDesired = int.Parse(strQuantityDesired);
+                                    Catering temp2 = new Catering();
+                                    temp2.CheckProductCode(userInput, intQuantityDesired);
                                     break;
 
                                 case "3":
@@ -65,8 +73,8 @@ namespace Capstone.Classes
                             PurchaseMenu();
 
                             userInput = Console.ReadLine();
-                        
-                        
+
+
                         }
 
                         break;
@@ -87,6 +95,8 @@ namespace Capstone.Classes
             }
 
         }
+
+
 
 
 
@@ -121,38 +131,7 @@ namespace Capstone.Classes
         }
 
 
-        //Add money method
-
-        int balance = 0;
-        int deposit = 0;
-
-        public int AddMoney(string userInput) //log everytime money is added
-        {
-
-            try
-            {
-                deposit = int.Parse(userInput);
-
-                if (deposit >= 0 && deposit + balance <= 5000)
-
-                {
-                    balance += deposit;
-                }
-                else
-                {
-                    Console.WriteLine("Balance must be between 0 and 5000");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Nice try but please enter an integer");
-            }
-
-
-            Console.WriteLine("Your account balance is: " + "$" + balance);
-
-            return balance;
-        }
+        
 
     }
 }
