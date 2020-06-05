@@ -39,7 +39,9 @@ namespace Capstone.Classes
 
         public override string ToString()
         {
-            return Code + " - " + Name + " - " + "$" + Price.ToString() + " - " + Type + " - " +  "Quantity: " + QuantityRemaining;
+            return Code.PadRight(5) + " - " + Name.PadRight(23) + " - " + 
+                "$" + Price.ToString().PadRight(7) + " - " + Type.PadRight(5) + 
+                " - " +  "Quantity: " + QuantityRemaining;
         }
 
 
