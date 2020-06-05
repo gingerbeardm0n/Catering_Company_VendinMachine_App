@@ -48,6 +48,9 @@ namespace Capstone.Classes
                                     break;
 
                                 case "2":
+                                    Console.WriteLine("Please enter product code");
+                                    userInput = Console.ReadLine();
+                                    SelectProducts();
                                     //Select Products - also track for log
                                     break;
 

@@ -36,7 +36,11 @@ namespace Capstone.Classes
 
         //methods
 
+   
+
         //switch case 2.2 in UserInterface
+
+      
 
         //if product code does not exist, customer is informed and return to Purchase menu
         //if product is sold out, the customer is informed and returned to the Purchase menu
