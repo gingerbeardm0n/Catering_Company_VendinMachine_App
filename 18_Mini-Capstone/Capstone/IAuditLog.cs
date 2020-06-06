@@ -6,12 +6,8 @@ namespace Capstone
 {
    public interface IAuditLog
     {
-        
-
         void AuditLog();
-         
-
-
+        
     }
 }
 

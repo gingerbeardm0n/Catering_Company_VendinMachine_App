@@ -7,49 +7,33 @@ namespace Capstone.Classes
 {
     public class UserInterface
     {
-        // This class provides all user communications, but not much else.
-        // All the "work" of the application should be done elsewhere
-        // ALL instances of Console.ReadLine and Console.WriteLine should 
-        // be in this class
-
         
-
         private Catering catering = new Catering();
 
         Catering items = new Catering();
-
-        //CateringItem cateringItem = new CateringItem();
-
+        
         public void RunInterface()
         {
-
-
             string userInput = "";
-
-
-
+            
             bool isFinished = false;
             while (!isFinished)
-
             { 
             MainMenu();
 
             userInput = Console.ReadLine();
-
-            
+                
                 switch (userInput)
                 {
-                    case "1":
+                    case "1": // Case 1.1 - Display Items
                         DisplayItems(items);
                         break;
 
-                    case "2":
+                    case "2": // Case 1.2 - Go to order menu
                        
-
                         bool isDone = false;
                         while (!isDone)
                         {
-
                             PurchaseMenu();
 
                             userInput = Console.ReadLine();
@@ -61,10 +45,9 @@ namespace Capstone.Classes
                                     userInput = Console.ReadLine();
                                     string addMoneyMessage = items.AddMoney(userInput);
                                     Console.WriteLine(addMoneyMessage);
-
-
+                                    
                                     break;
-                                case "2":
+                                case "2":  // Case 2.2 - Select Items
 
                                     Console.WriteLine("Please enter valid product code");
                                     string checkProduct = Console.ReadLine();
@@ -76,9 +59,11 @@ namespace Capstone.Classes
 
                                     string checkProductMessage = items.CheckProductCode(checkProduct, intQuantityDesired);
                                     Console.WriteLine(checkProductMessage);
-                                    CateringItem selectedItem = null;
+                                    
+                                    //  This is taking the checkProduct input from the user and grabbing the item from the database 
+                                    //  (items.ItemList), which was used in Catering to create the initial list from the data file
 
-                                    //This is taking the checkProduct input from the user and grabbing the item from the database (items.ItemList, which was used in Catering to create the initial list from the data file
+                                    CateringItem selectedItem = null;
 
                                     foreach (CateringItem item in items.ItemList)
                                     {
@@ -88,58 +73,49 @@ namespace Capstone.Classes
                                             break;
                                         }
                                     }
-                                    
-                                    if (checkProductMessage == "Purchased!")
+                                    if (checkProductMessage == "ITEM ADDED TO CART")
                                     {
                                         items.Purchase(selectedItem, intQuantityDesired);
                                     }
-
-
-
                                     break;
-                                case "3":
-                                    //items.UpdateTotalCost(cateringItem.IntQuantityDesired);
+                                case "3": // Case 2.3 - Complete Transaction
+                                    
                                     string cashBack = items.GiveChange(items.Balance);
                                     Console.WriteLine(cashBack);
+
                                     string printList = items.PrintPurchases(items.PurchasedItems);
-                                    Console.WriteLine(printList); // this needs resolved
+                                    Console.WriteLine(printList);
 
                                     string checkOut = items.BalanceToZero();
                                     Console.WriteLine(checkOut);
-
-                                    Console.WriteLine("Press enter to return");
+                                    Console.WriteLine("Press enter to return to main menu");
                                     Console.ReadLine();
-                                    isDone = true;
+
+                                    isDone = true; //ends the while loop
 
                                     break;
-
                                 default:
                                     Console.WriteLine("Please make a valid selection");
                                     break;
                             }
                             Console.WriteLine(); //blank line
-
-                           
                         }
                         break;
 
                     case "3":
                         isFinished = true;
+                        Console.WriteLine("Press Enter To Exit, Enjoy Your Tasty Tasty Food");
                         break;
                     default:
                         Console.WriteLine("Please make a valid selection");
                         break;
                 }
-
                 Console.WriteLine(); //blank line
-
-               
             }
-
         }
 
-        //Methods
 
+        //-------Methods--------------------------------------------------------------------------------------------------
         private void MainMenu()
         {
             Console.WriteLine("(1) Display Catering Items");
@@ -165,6 +141,5 @@ namespace Capstone.Classes
                 Console.WriteLine(tempItem[i].ToString());
             }
         }
-
     }
 }
