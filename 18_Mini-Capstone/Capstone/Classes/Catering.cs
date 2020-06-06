@@ -10,10 +10,7 @@ namespace Capstone.Classes
     public class Catering : IAuditLog
 
     {
-      
-
-      
-
+   
         public void AuditLog()
         {
 
@@ -43,7 +40,7 @@ namespace Capstone.Classes
         {
             using (StreamWriter sw = new StreamWriter(@"c:\Catering\Log.txt", true))
             {
-                sw.WriteLine(DateTime.Now + "  " + intQuantityRequested + itemObj.Name + itemObj.Code + "$" + (intQuantityRequested * itemObj.Price) + "  " + "$" + Balance);
+                sw.WriteLine(DateTime.Now + "  " + intQuantityRequested + "  " + itemObj.Name + "  " + itemObj.Code + "  " +  "$" + (intQuantityRequested * itemObj.Price) + "  " + "$" + Balance);
 
 
             }
@@ -59,10 +56,7 @@ namespace Capstone.Classes
 
         public decimal Balance { get; private set; }
 
-
-
-
-        public decimal TotalCost { get; private set; }
+        public decimal TotalCost { get; private set; } // do we need this?
 
         public List<CateringItem> PurchasedItems { get; } = new List<CateringItem>();
 
@@ -240,7 +234,7 @@ namespace Capstone.Classes
             dimes = (toFigureNumberOfCoins - (quarters * 25)) / 10;
             nickels = ((toFigureNumberOfCoins - (quarters * 25) + (dimes * 10)) / 5);
 
-            return "Your change is: " + twenties + " Twenty Dollar Bill(s), " + tens + " Ten(s), " + fives + " Five(s), " + ones + " One(s), " + quarters + " Quarter(s), " + dimes + " Dime(s), " + nickels + " Nickel(s)";
+            return "Your change is " + "$" + cashBack + " in the form of: " + twenties + " Twenty Dollar Bill(s), " + tens + " Ten(s), " + fives + " Five(s), " + ones + " One(s), " + quarters + " Quarter(s), " + dimes + " Dime(s), " + nickels + " Nickel(s)";
 
 
         }
