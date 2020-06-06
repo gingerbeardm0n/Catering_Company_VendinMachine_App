@@ -1,14 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Capstone.Classes
 {
 
 
-    public class Catering
+    public class Catering : IAuditLog
+
     {
-        CateringItem purchasedItem = new CateringItem();
+      
+
+      
+
+        public void AuditLog()
+        {
+
+        }
+
+        public void AuditLog(int deposit, decimal Balance) // for Add Money
+        {
+            using (StreamWriter sw = new StreamWriter(@"c:\Catering\Log.txt", true))
+            {
+                sw.WriteLine(DateTime.Now + "  " + "ADD MONEY:  " + "$" + deposit + "  " + "$" + Balance);
+
+               
+            }
+        }
+
+        public void AuditLog(decimal Balance) // for give change
+        {
+            using (StreamWriter sw = new StreamWriter(@"c:\Catering\Log.txt", true))
+            {
+                sw.WriteLine(DateTime.Now + "  " + "GIVE CHANGE:  " + "$" + Balance + "  " + "$0.00");
+
+
+            }
+        }
+
+        public void AuditLog(int intQuantityRequested, decimal balance, CateringItem itemObj) // for purchases
+        {
+            using (StreamWriter sw = new StreamWriter(@"c:\Catering\Log.txt", true))
+            {
+                sw.WriteLine(DateTime.Now + "  " + intQuantityRequested + itemObj.Name + itemObj.Code + "$" + (intQuantityRequested * itemObj.Price) + "  " + "$" + Balance);
+
+
+            }
+        }
+
+
+
+
+
 
         // make constructor that reads catering file and adds to list
         // This class should contain all the "work" for catering
@@ -67,6 +111,8 @@ namespace Capstone.Classes
 
                 {
                     Balance += deposit;
+
+                    AuditLog(deposit, Balance); // to print out to Log.txt
                 }
                 else
                 {
@@ -89,17 +135,17 @@ namespace Capstone.Classes
         {
             foreach (CateringItem itemObj in items)
             {
+                CateringItem purchasedItem = new CateringItem();
+
 
                 if ((productCode == itemObj.Code) && (itemObj.QuantityRemaining >= intQuantityDesired) && ((intQuantityDesired * itemObj.Price) < Balance))
                 {
 
-                    purchasedItem.IntQuantityDesired = itemObj.IntQuantityDesired;
-                    purchasedItem.Code = itemObj.Code;
-                    purchasedItem.Name = itemObj.Name;
-                    purchasedItem.Price = itemObj.Price;
-                    purchasedItem.Type = itemObj.Type;
+                   itemObj.IntQuantityDesired = intQuantityDesired;
 
-                    PurchasedItems.Add(purchasedItem);
+                    AuditLog(intQuantityDesired, Balance, itemObj);
+
+                    PurchasedItems.Add(itemObj);
 
                     return "Purchased!";
                 }
@@ -129,9 +175,9 @@ namespace Capstone.Classes
 
         }
 
-        public void Purchase(int intQuantityDesired, decimal balance)
+        public void Purchase(CateringItem purchasedItem, int intQuantityDesired)
         {
-            Balance -= (purchasedItem.Price * intQuantityDesired);
+           Balance -= (purchasedItem.Price * intQuantityDesired);
         
         }
 
@@ -145,11 +191,11 @@ namespace Capstone.Classes
         //    return TotalCost;
         //}
 
-        public string PrintPurchases(List<CateringItem> purchasedItems)
+        public string PrintPurchases(List<CateringItem> PurchasedItems)
         {
             string result = "";
 
-            foreach (CateringItem item in purchasedItems)
+            foreach (CateringItem item in PurchasedItems)
             {
                 result += item.IntQuantityDesired + "   " + item.Type + "   " + item.Name + "   " + "$" + item.Price + "   " + "$" + (item.IntQuantityDesired * item.Price) + "\n";
             }
@@ -166,6 +212,8 @@ namespace Capstone.Classes
 
         public string GiveChange(decimal balance)
         {
+            AuditLog(Balance); //to print out to Log.txt
+
             decimal cashBack = balance;
 
 

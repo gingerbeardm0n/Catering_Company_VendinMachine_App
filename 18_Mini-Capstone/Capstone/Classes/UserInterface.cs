@@ -17,7 +17,9 @@ namespace Capstone.Classes
         private Catering catering = new Catering();
 
         Catering items = new Catering();
-        CateringItem cateringItem = new CateringItem();
+
+        //CateringItem cateringItem = new CateringItem();
+
         public void RunInterface()
         {
 
@@ -70,14 +72,26 @@ namespace Capstone.Classes
                                     Console.WriteLine("Please enter desired quantity");
                                     string strQuantityDesired = Console.ReadLine();
 
-                                    cateringItem.IntQuantityDesired = int.Parse(strQuantityDesired);
+                                    int intQuantityDesired = int.Parse(strQuantityDesired);
 
-                                    string checkProductMessage = items.CheckProductCode(checkProduct, cateringItem.IntQuantityDesired);
+                                    string checkProductMessage = items.CheckProductCode(checkProduct, intQuantityDesired);
                                     Console.WriteLine(checkProductMessage);
+                                    CateringItem selectedItem = null;
 
+                                    //This is taking the checkProduct input from the user and grabbing the item from the database (items.ItemList, which was used in Catering to create the initial list from the data file
+
+                                    foreach (CateringItem item in items.ItemList)
+                                    {
+                                        if (item.Code == checkProduct)
+                                        {
+                                            selectedItem = item; //allows us to get selected item and pass in below
+                                            break;
+                                        }
+                                    }
+                                    
                                     if (checkProductMessage == "Purchased!")
                                     {
-                                        items.Purchase(cateringItem.IntQuantityDesired, items.Balance);
+                                        items.Purchase(selectedItem, intQuantityDesired);
                                     }
 
 
