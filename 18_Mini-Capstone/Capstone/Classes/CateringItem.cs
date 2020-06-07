@@ -38,11 +38,11 @@ namespace Capstone.Classes
                         
         }
 
-        public override string ToString()
+        public override string ToString() //using this to override the ToString Method in UserInterface line 141
         {
-            return Code.PadRight(5) + " - " + Name.PadRight(23) + " - " + 
-                "$" + Price.ToString().PadRight(7) + " - " + Type.PadRight(5) + 
-                " - " +  "Quantity: " + QuantityRemaining;
+            return " " + Code.PadRight(7) + Name.PadRight(23) +  
+                "$" + Price.ToString().PadRight(10) + Type.PadRight(8) + 
+                 + QuantityRemaining;
         }
 
 

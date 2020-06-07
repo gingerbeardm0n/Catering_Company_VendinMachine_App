@@ -26,6 +26,7 @@ namespace Capstone.Classes
                 switch (userInput)
                 {
                     case "1": // Case 1.1 - Display Items
+                        DisplayItemCategories();
                         DisplayItems(items);
                         break;
 
@@ -83,6 +84,8 @@ namespace Capstone.Classes
                                     string cashBack = items.GiveChange(items.Balance);
                                     Console.WriteLine(cashBack);
 
+                                    DisplayPurchasesCategories();
+
                                     string printList = items.PrintPurchases(items.PurchasedItems);
                                     Console.WriteLine(printList);
 
@@ -132,8 +135,15 @@ namespace Capstone.Classes
             Console.WriteLine(); //Blank line
         }
 
+        private void DisplayItemCategories()
+        {
+            Console.WriteLine(" CODE   NAME                   PRICE      TYPE    QUANTITY REMAINING");
+            Console.WriteLine("--------------------------------------------------------------------");
+        }
+
         private void DisplayItems(Catering items)
         {
+            
             CateringItem[] tempItem = items.ItemList; // to review later/ask Matt
 
             for (int i = 0; i < tempItem.Length; i++)
@@ -141,5 +151,12 @@ namespace Capstone.Classes
                 Console.WriteLine(tempItem[i].ToString());
             }
         }
+
+        private void DisplayPurchasesCategories()
+        {
+            Console.WriteLine("QUANTITY BOUGHT   TYPE   NAME                   PRICE   TOTAL COST");
+            Console.WriteLine("------------------------------------------------------------------");
+        }
     }
 }
+

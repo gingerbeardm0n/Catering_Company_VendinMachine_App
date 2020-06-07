@@ -159,7 +159,9 @@ namespace Capstone.Classes
 
             foreach (CateringItem item in PurchasedItems)
             {
-                result += item.IntQuantityDesired + "   " + item.Type + "   " + item.Name + "   " + "$" + item.Price + "   " + "$" + (item.IntQuantityDesired * item.Price) + "\n";
+                result += item.IntQuantityDesired.ToString().PadRight(2) + "                " + item.Type.PadRight(4) + 
+                    "   " + item.Name.PadRight(20) + "   " + "$" + item.Price.ToString().PadRight(2) + "   " + 
+                    "$" + (item.IntQuantityDesired * item.Price).ToString().PadRight(2) + "\n";
             }
 
             return result;
