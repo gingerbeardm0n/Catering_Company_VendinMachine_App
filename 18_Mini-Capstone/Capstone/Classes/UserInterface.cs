@@ -36,7 +36,7 @@ namespace Capstone.Classes
                         while (!isDone)
                         {
                             PurchaseMenu();
-
+                            Console.WriteLine();//blank line
                             userInput = Console.ReadLine();
 
                             switch (userInput)
@@ -50,9 +50,11 @@ namespace Capstone.Classes
                                     break;
                                 case "2":  // Case 2.2 - Select Items
 
+                                    Console.WriteLine(); //blank line
                                     Console.WriteLine("Please enter valid product code");
                                     string checkProduct = Console.ReadLine();
 
+                                    Console.WriteLine(); //blank line
                                     Console.WriteLine("Please enter desired quantity");
                                     string strQuantityDesired = Console.ReadLine();
 
@@ -88,7 +90,10 @@ namespace Capstone.Classes
 
                                     string printList = items.PrintPurchases(items.PurchasedItems);
                                     Console.WriteLine(printList);
+                                    Console.WriteLine(); //blank line
+                                    Console.WriteLine("Total: " + items.TotalCost);
 
+                                    Console.WriteLine(); //blank line
                                     string checkOut = items.BalanceToZero();
                                     Console.WriteLine(checkOut);
                                     Console.WriteLine("Press enter to return to main menu");
@@ -143,12 +148,21 @@ namespace Capstone.Classes
 
         private void DisplayItems(Catering items)
         {
-            
+            List<CateringItem> displayList = new List<CateringItem>();
             CateringItem[] tempItem = items.ItemList; // to review later/ask Matt
 
             for (int i = 0; i < tempItem.Length; i++)
             {
-                Console.WriteLine(tempItem[i].ToString());
+                 string temp = tempItem[i].ToString();
+
+                string tempSub2 = temp.Substring(0, temp.Length - 2);
+                string tempSub = temp.Substring(temp.Length - 2, 2);
+                if (tempSub == " 0")
+                {
+                    tempSub = "SOLD OUT";
+                }
+
+                Console.WriteLine(tempSub2 + tempSub);
             }
         }
 

@@ -21,7 +21,12 @@ namespace Capstone.Classes
             get
             {
                 return quantity - IntQuantityDesired;
-            }  //might need to change to private later
+            }
+            set
+            {
+                QuantityRemaining = value;
+            }
+            
         }
 
         public CateringItem()
@@ -35,14 +40,14 @@ namespace Capstone.Classes
             Name = name;
             Price = price;
             Type = type;
-                        
+
         }
 
         public override string ToString() //using this to override the ToString Method in UserInterface line 141
         {
-            return " " + Code.PadRight(7) + Name.PadRight(23) +  
-                "$" + Price.ToString().PadRight(10) + Type.PadRight(8) + 
-                 + QuantityRemaining;
+            return " " + Code.PadRight(7) + Name.PadRight(23) +
+                "$" + Price.ToString().PadRight(10) + Type.PadRight(8) +
+                 +QuantityRemaining;
         }
 
 

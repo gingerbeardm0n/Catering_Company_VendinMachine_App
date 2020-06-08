@@ -46,11 +46,14 @@ namespace Capstone.Classes
 
         public decimal Balance { get; private set; }
 
+        public decimal TotalCost { get; set; }
+
         public List<CateringItem> PurchasedItems { get; private set; } = new List<CateringItem>();
         
-        public Catering(decimal balance)
+        public Catering(decimal balance, decimal totalCost)
         {
-            Balance = balance; 
+            Balance = balance;
+            TotalCost = totalCost;
         }
         //-----------------------------------------------------------------------------------------------------------------
         // This constructor, property, and method are working in conjunction to read in CSV file and convert to a list of catering items, AKA it makes
@@ -110,7 +113,6 @@ namespace Capstone.Classes
         {
             foreach (CateringItem itemObj in items)
             {
-                CateringItem purchasedItem = new CateringItem();
 
 
                 if ((productCode == itemObj.Code) && (itemObj.QuantityRemaining >= intQuantityDesired) && ((intQuantityDesired * itemObj.Price) < Balance))
@@ -121,6 +123,8 @@ namespace Capstone.Classes
                     AuditLog(intQuantityDesired, Balance, itemObj);
 
                     PurchasedItems.Add(itemObj);
+
+                    TotalCost += (itemObj.IntQuantityDesired * itemObj.Price);
 
                     return "ITEM ADDED TO CART";
                 }
