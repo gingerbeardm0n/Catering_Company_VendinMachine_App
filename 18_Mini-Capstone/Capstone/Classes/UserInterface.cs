@@ -7,11 +7,13 @@ namespace Capstone.Classes
 {
     public class UserInterface
     {
-        
+        //---------- INSTANTIATION ------------------------------------------------------------------------------------------------------------------------------------------
         private Catering catering = new Catering();
 
         Catering items = new Catering();
-        
+
+        //---------- RunInterface METHOD ---------------------------------------------------------------------------------------------------------------------------------------------
+
         public void RunInterface()
         {
             string userInput = "";
@@ -36,7 +38,7 @@ namespace Capstone.Classes
                         while (!isDone)
                         {
                             PurchaseMenu();
-                            Console.WriteLine();//blank line
+                            Console.WriteLine();/
                             userInput = Console.ReadLine();
 
                             switch (userInput)
@@ -63,9 +65,6 @@ namespace Capstone.Classes
                                     string checkProductMessage = items.CheckProductCode(checkProduct, intQuantityDesired);
                                     Console.WriteLine(checkProductMessage);
                                     
-                                    //  This is taking the checkProduct input from the user and grabbing the item from the database 
-                                    //  (items.ItemList), which was used in Catering to create the initial list from the data file
-
                                     CateringItem selectedItem = null;
 
                                     foreach (CateringItem item in items.ItemList)
@@ -121,9 +120,11 @@ namespace Capstone.Classes
                 Console.WriteLine(); //blank line
             }
         }
+        //---------- END RunInterface METHOD ---------------------------------------------------------------------------------------------------------------------------------------------
 
 
-        //-------Methods--------------------------------------------------------------------------------------------------
+        //------- DISPLAY METHODS ------------------------------------------------------------------------------------------------------------------------------------
+
         private void MainMenu()
         {
             Console.WriteLine("(1) Display Catering Items");
@@ -161,7 +162,6 @@ namespace Capstone.Classes
                 {
                     tempSub = "SOLD OUT";
                 }
-
                 Console.WriteLine(tempSub2 + tempSub);
             }
         }

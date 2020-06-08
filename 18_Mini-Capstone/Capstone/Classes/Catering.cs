@@ -10,80 +10,28 @@ namespace Capstone.Classes
     public class Catering : IAuditLog
 
     {
-        public void AuditLog()
-        {
-
-        }
-        public void AuditLog(int deposit, decimal Balance) // for Add Money
-        {
-            using (StreamWriter sw = new StreamWriter(@"c:\Catering\Log.txt", true))
-            {
-                sw.WriteLine(DateTime.Now + "  " + "ADD MONEY:  " + "$" + deposit + "  " + "$" + Balance);
-            }
-        }
-
-        public void AuditLog(decimal Balance) // for give change
-        {
-            using (StreamWriter sw = new StreamWriter(@"c:\Catering\Log.txt", true))
-            {
-                sw.WriteLine(DateTime.Now + "  " + "GIVE CHANGE:  " + "$" + Balance + "  " + "$0.00");
-            }
-        }
-
-        public void AuditLog(int intQuantityRequested, decimal balance, CateringItem itemObj) // for purchases
-        {
-            using (StreamWriter sw = new StreamWriter(@"c:\Catering\Log.txt", true))
-            {
-                sw.WriteLine(DateTime.Now + "  " + intQuantityRequested + "  " + 
-                    itemObj.Name + "  " + itemObj.Code + "  " +  "$" + 
-                    (intQuantityRequested * itemObj.Price) + "  " + "$" + Balance);
-                
-            }
-        }
-        
-        // make constructor that reads catering file and adds to list
-        // This class should contain all the "work" for catering
+        //---------- PROPERTIES -----------------------------------------------------------------------------------------------------------------------------------
 
         public decimal Balance { get; private set; }
-
         public decimal TotalCost { get; set; }
-
         public List<CateringItem> PurchasedItems { get; private set; } = new List<CateringItem>();
-        
+
+        //---------- CONSTRUCTORS ---------------------------------------------------------------------------------------------------------------------------------
+
         public Catering(decimal balance, decimal totalCost)
         {
             Balance = balance;
             TotalCost = totalCost;
         }
-        //-----------------------------------------------------------------------------------------------------------------
-        // This constructor, property, and method are working in conjunction to read in CSV file and convert to a list of catering items, AKA it makes
-        // the data accessible to us as programmers to use as we sit fit
 
-        private List<CateringItem> items = new List<CateringItem>();
-
-        //Method ReadItems() is pre-determined method that returns a List of type catering items.
-        private List<CateringItem> ReadItems()
+        public void AuditLog() //needed for AuditLog Methods
         {
-            FileAccess fa = new FileAccess();
-            return fa.ReadItems();
-        }
-        //  Use the method ReadItems() to pull data from desired file and store it inside the list "items" (instantiated few line above)
-        public Catering()
-        {
-            items = ReadItems();
-        }
-        //Use this property to (ASK for HELP here, not sure we fully understand)
-        public CateringItem[] ItemList //never seen a property be of type Class, let alone of type class[].
-        {
-            get
-            {
-                return items.ToArray(); // Taking a list of objects (CateringItem) and putting into an array - why?
-            }
-        }
 
-        //--------------------------------------------------------------------------------------------------------------------------
-
-        public string AddMoney(string userInput) //log everytime money is added
+        }
+        
+        //---------- METHODS --------------------------------------------------------------------------------------------------------------------------------------
+       
+        public string AddMoney(string userInput)
         {
             int deposit = 0;
             try
@@ -120,7 +68,7 @@ namespace Capstone.Classes
 
                    itemObj.IntQuantityDesired = intQuantityDesired;
 
-                    AuditLog(intQuantityDesired, Balance, itemObj);
+                    AuditLog(intQuantityDesired, Balance, itemObj); // to print out to Log.txt
 
                     PurchasedItems.Add(itemObj);
 
@@ -213,6 +161,60 @@ namespace Capstone.Classes
                 ones + " One(s), " + quarters + " Quarter(s), " + dimes + " Dime(s), " + 
                 nickels + " Nickel(s)";
         }
+
+        //---------- AUDIT LOG METHODS ------------------------------------------------------------------------------------------------------------------------------------
+
+        public void AuditLog(int deposit, decimal Balance) // for Add Money
+        {
+            using (StreamWriter sw = new StreamWriter(@"c:\Catering\Log.txt", true))
+            {
+                sw.WriteLine(DateTime.Now + "  " + "ADD MONEY:  " + "$" + deposit + "  " + "$" + Balance);
+            }
+        }
+
+        public void AuditLog(decimal Balance) // for give change
+        {
+            using (StreamWriter sw = new StreamWriter(@"c:\Catering\Log.txt", true))
+            {
+                sw.WriteLine(DateTime.Now + "  " + "GIVE CHANGE:  " + "$" + Balance + "  " + "$0.00");
+            }
+        }
+
+        public void AuditLog(int intQuantityRequested, decimal balance, CateringItem itemObj) // for purchases
+        {
+            using (StreamWriter sw = new StreamWriter(@"c:\Catering\Log.txt", true))
+            {
+                sw.WriteLine(DateTime.Now + "  " + intQuantityRequested + "  " + 
+                    itemObj.Name + "  " + itemObj.Code + "  " +  "$" + 
+                    (intQuantityRequested * itemObj.Price) + "  " + "$" + Balance);
+                
+            }
+        }
+        //---------- END AUDIT LOG METHODS -----------------------------------------------------------------------------------------------------------------------------
+        
+        //---- The following instantiation, property, constructor, and method allow us to read in the CSV file and convert to a list of type CateringItems. ------------
+
+        private List<CateringItem> items = new List<CateringItem>(); // instantiate items, so we have access to the class CateringItem
+
+        public CateringItem[] ItemList //never seen a property be of type Class, let alone of type class[]. Why?
+        {
+            get
+            {
+                return items.ToArray(); // Taking a list of objects (CateringItem) and putting into an array - why?
+            }
+        }
+        public Catering() // In this constructor, use the method to pull the data ans store it inside "items"
+        {
+            items = ReadItems();
+        }
+        private List<CateringItem> ReadItems() // used to return a list of type CateringItems.
+        {
+            FileAccess fa = new FileAccess();
+            return fa.ReadItems();
+        }
+        
+        //---- End "File Transfer" Commands -----------------------------------------------------------------------------------------------------------------------------
+        
     }
 }
 

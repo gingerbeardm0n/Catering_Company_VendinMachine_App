@@ -4,12 +4,14 @@ using System.Text;
 
 namespace Capstone.Classes
 {
-
-    // This class should contain the definition for one catering item
-
+    
     public class CateringItem
     {
+        //---------- VARIABLES -------------------------------------------------------------------------------------------------------------------------------------------
+
         public int quantity = 50;
+
+        //---------- PROPERTIES ------------------------------------------------------------------------------------------------------------------------------------------
 
         public string Code { get; set; }
         public string Name { get; set; }
@@ -26,12 +28,12 @@ namespace Capstone.Classes
             {
                 QuantityRemaining = value;
             }
-            
         }
+
+        //---------- CONSTRUCTORS ----------------------------------------------------------------------------------------------------------------------------------------
 
         public CateringItem()
         {
-
         }
 
         public CateringItem(string code, string name, decimal price, string type)
@@ -40,8 +42,9 @@ namespace Capstone.Classes
             Name = name;
             Price = price;
             Type = type;
-
         }
+
+        //---------- METHODS -----------------------------------------------------------------------------------------------------------------------------------------------
 
         public override string ToString() //using this to override the ToString Method in UserInterface line 141
         {
@@ -49,7 +52,5 @@ namespace Capstone.Classes
                 "$" + Price.ToString().PadRight(10) + Type.PadRight(8) +
                  +QuantityRemaining;
         }
-
-
     }
 }
