@@ -57,7 +57,7 @@ namespace Capstone.Classes
             return "Your account balance is: " + "$" + Balance;
         }
 
-        public string CheckProductCode(string productCode, int intQuantityDesired)
+        public string PurchaseIndividualItem(string productCode, int intQuantityDesired)
         {
             foreach (CateringItem itemObj in items)
             {
@@ -99,7 +99,7 @@ namespace Capstone.Classes
             return "PRODUCT CODE NOT FOUND";
         }
 
-        public void Purchase(CateringItem purchasedItem, int intQuantityDesired)
+        public void UpdateBalance(CateringItem purchasedItem, int intQuantityDesired)
         {
            Balance -= (purchasedItem.Price * intQuantityDesired);
         
@@ -119,14 +119,7 @@ namespace Capstone.Classes
             return result;
         }
 
-        public string BalanceToZero()
-        {
-            Balance = 0;
-            List<CateringItem> emptyList = new List<CateringItem>();
-            PurchasedItems = emptyList;
-            
-            return "Your change has been returned and your balance is $0. Thank you!";
-        }
+       
         
         public string GiveChange(decimal balance)
         {
@@ -160,6 +153,15 @@ namespace Capstone.Classes
                 " Twenty Dollar Bill(s), " + tens + " Ten(s), " + fives + " Five(s), " + 
                 ones + " One(s), " + quarters + " Quarter(s), " + dimes + " Dime(s), " + 
                 nickels + " Nickel(s)";
+        }
+
+        public string BalanceToZero()
+        {
+            Balance = 0;
+            List<CateringItem> emptyList = new List<CateringItem>();
+            PurchasedItems = emptyList;
+
+            return "Your change has been returned and your balance is $0. Thank you!";
         }
 
         //---------- AUDIT LOG METHODS ------------------------------------------------------------------------------------------------------------------------------------

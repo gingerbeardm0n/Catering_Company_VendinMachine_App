@@ -38,7 +38,7 @@ namespace Capstone.Classes
                         while (!isDone)
                         {
                             PurchaseMenu();
-                            Console.WriteLine();/
+                            Console.WriteLine();
                             userInput = Console.ReadLine();
 
                             switch (userInput)
@@ -62,7 +62,7 @@ namespace Capstone.Classes
 
                                     int intQuantityDesired = int.Parse(strQuantityDesired);
 
-                                    string checkProductMessage = items.CheckProductCode(checkProduct, intQuantityDesired);
+                                    string checkProductMessage = items.PurchaseIndividualItem(checkProduct, intQuantityDesired);
                                     Console.WriteLine(checkProductMessage);
                                     
                                     CateringItem selectedItem = null;
@@ -77,7 +77,7 @@ namespace Capstone.Classes
                                     }
                                     if (checkProductMessage == "ITEM ADDED TO CART")
                                     {
-                                        items.Purchase(selectedItem, intQuantityDesired);
+                                        items.UpdateBalance(selectedItem, intQuantityDesired);
                                     }
                                     break;
                                 case "3": // Case 2.3 - Complete Transaction
