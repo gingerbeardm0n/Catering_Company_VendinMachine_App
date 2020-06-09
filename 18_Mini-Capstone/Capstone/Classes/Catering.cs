@@ -119,9 +119,7 @@ namespace Capstone.Classes
             return result;
         }
 
-       
-        
-        public string GiveChange(decimal balance)
+        public List<int> CalculateChange(decimal balance)
         {
             AuditLog(Balance); //to print out to Log.txt
 
@@ -149,10 +147,23 @@ namespace Capstone.Classes
             dimes = (toFigureNumberOfCoins - (quarters * 25)) / 10;
             nickels = (toFigureNumberOfCoins - ((quarters * 25) + (dimes * 10))) / 5;
 
-            return "Your change is " + "$" + cashBack + " in the form of: " + twenties + 
-                " Twenty Dollar Bill(s), " + tens + " Ten(s), " + fives + " Five(s), " + 
-                ones + " One(s), " + quarters + " Quarter(s), " + dimes + " Dime(s), " + 
-                nickels + " Nickel(s)";
+            List<int> changeList = new List<int>();
+
+            changeList.Add(twenties);
+            changeList.Add(tens);
+            changeList.Add(fives);
+            changeList.Add(ones);
+            changeList.Add(quarters);
+            changeList.Add(dimes);
+            changeList.Add(nickels);
+
+            return changeList;
+            
+            
+            //return "Your change is " + "$" + cashBack + " in the form of: " + twenties + 
+            //    " Twenty Dollar Bill(s), " + tens + " Ten(s), " + fives + " Five(s), " + 
+            //    ones + " One(s), " + quarters + " Quarter(s), " + dimes + " Dime(s), " + 
+            //    nickels + " Nickel(s)";
         }
 
         public string BalanceToZero()

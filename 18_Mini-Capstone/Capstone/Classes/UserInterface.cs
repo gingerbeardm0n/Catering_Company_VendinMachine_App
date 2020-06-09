@@ -81,9 +81,11 @@ namespace Capstone.Classes
                                     }
                                     break;
                                 case "3": // Case 2.3 - Complete Transaction
+
+                                    TenderChange();
                                     
-                                    string cashBack = items.GiveChange(items.Balance);
-                                    Console.WriteLine(cashBack);
+                                    Console.WriteLine("List of purchased items and total cost this transaction:");
+                                    Console.WriteLine();
 
                                     DisplayPurchasesCategories();
 
@@ -170,6 +172,74 @@ namespace Capstone.Classes
         {
             Console.WriteLine("QUANTITY BOUGHT   TYPE   NAME                   PRICE   TOTAL COST");
             Console.WriteLine("------------------------------------------------------------------");
+        }
+
+        private void TenderChange()
+        {
+            List<int> cashBack = items.CalculateChange(items.Balance);
+
+            Console.WriteLine();
+            Console.WriteLine("Thank you for your purchase(s)! Your total change is " + items.Balance +
+                " and is now refunded to you in the form of:");
+            Console.WriteLine();
+
+            if (cashBack[0] == 1)
+            {
+                Console.WriteLine(cashBack[0].ToString().PadRight(3) + "  TWENTY");
+            }
+            else if (cashBack[0] > 1)
+            {
+                Console.WriteLine(cashBack[0].ToString().PadRight(3) + "  TWENTIES");
+            }
+            if (cashBack[1] == 1)
+            {
+                Console.WriteLine(cashBack[1].ToString().PadRight(3) + "  TEN");
+            }
+            else if (cashBack[1] > 1)
+            {
+                Console.WriteLine(cashBack[1].ToString().PadRight(3) + "  TENS");
+            }
+            if (cashBack[2] == 1)
+            {
+                Console.WriteLine(cashBack[2].ToString().PadRight(3) + "  FIVE");
+            }
+            else if (cashBack[2] > 1)
+            {
+                Console.WriteLine(cashBack[2].ToString().PadRight(3) + "  FIVES");
+            }
+            if (cashBack[3] == 1)
+            {
+                Console.WriteLine(cashBack[3].ToString().PadRight(3) + "  ONE");
+            }
+            else if (cashBack[3] > 1)
+            {
+                Console.WriteLine(cashBack[3].ToString().PadRight(3) + "  ONES");
+            }
+            if (cashBack[4] == 1)
+            {
+                Console.WriteLine(cashBack[4].ToString().PadRight(3) + "  quarter");
+            }
+            else if (cashBack[4] > 1)
+            {
+                Console.WriteLine(cashBack[4].ToString().PadRight(3) + "  quarters");
+            }
+            if (cashBack[5] == 1)
+            {
+                Console.WriteLine(cashBack[5].ToString().PadRight(3) + "  dime");
+            }
+            else if (cashBack[5] > 1)
+            {
+                Console.WriteLine(cashBack[5].ToString().PadRight(3) + "  dimes");
+            }
+            if (cashBack[6] == 1)
+            {
+                Console.WriteLine(cashBack[6].ToString().PadRight(3) + "  nickel");
+            }
+            else if (cashBack[6] > 1)
+            {
+                Console.WriteLine(cashBack[6].ToString().PadRight(3) + "  nickels");
+            }
+            Console.WriteLine();
         }
     }
 }
