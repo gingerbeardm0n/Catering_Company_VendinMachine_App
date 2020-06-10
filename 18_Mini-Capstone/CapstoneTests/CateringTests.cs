@@ -4,16 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
- namespace CapstoneTests
+namespace CapstoneTests
 {
     [TestClass]
-   public class CateringTests
+    public class CateringTests
     {
 
-        //AddMoney tests
+        //---------- AddMoney Tests --------------------------------------------------------------------------------------------------------
 
         [TestMethod]
-        public void AddMoneyTest()
+        public void AddMoney_BaseCaseTest()
         {
             //Arrange
             Catering moneyTest = new Catering();
@@ -22,15 +22,60 @@ using System.Text;
             string result = moneyTest.AddMoney("500");
 
             //Assert
-           Assert.AreEqual(result, "Your account balance is: $500");
+            Assert.AreEqual(result, "Your account balance is: $500");
+        }
+
+        [TestMethod]
+        public void AddMoney_OutOfSpecifiedRangeTest()
+        {
+            //Arrange
+            Catering moneyTest = new Catering();
+
+            //Act
+            string result1 = moneyTest.AddMoney("7777");
+            string result2 = moneyTest.AddMoney("-42");
+
+            //Assert
+            Assert.AreEqual(result1, "Balance must be between 0 and $5000");
+            Assert.AreEqual(result2, "Balance must be between 0 and $5000");
+        }
+
+        [TestMethod]
+        public void AddMoney_EdgeCaseTest()
+        {
+            //Arrange
+            Catering moneyTest = new Catering();
+
+            //Act
+            string result1 = moneyTest.AddMoney("0");
+            string result2 = moneyTest.AddMoney("5000");
+
+            //Assert
+            Assert.AreEqual(result1, "Your account balance is: $0");
+            Assert.AreEqual(result2, "Your account balance is: $5000");
+        }
+
+        [TestMethod]
+        public void AddMoney_NotEnteringAnIntegerTest()
+        {
+            //Arrange
+            Catering moneyTest = new Catering();
+
+            //Act
+            string result = moneyTest.AddMoney("twenty five");
+            string result2 = moneyTest.AddMoney("");
+
+            //Assert
+            Assert.AreEqual(result, "You must enter an integer");
+            Assert.AreEqual(result2, "You must enter an integer");
         }
 
 
 
-        //PurchaseIndividualItem tests
+        //---------- PurchaseIndividualItem Tests ------------------------------------------------------------------------------------------
 
         [TestMethod]
-        public void IndividualPurchaseTest()
+        public void IndividualPurchase_ItemAddedToCartTest()
         {
             //Arrange
             Catering purchaseTest = new Catering();
@@ -43,7 +88,7 @@ using System.Text;
         }
 
         [TestMethod]
-        public void IndividualPurchaseTestProductCodeNotFound()
+        public void IndividualPurchase_ProductCodeNotFoundTest()
         {
             //Arrange
             Catering purchaseTest = new Catering();
@@ -55,6 +100,47 @@ using System.Text;
             Assert.AreEqual(result, "PRODUCT CODE NOT FOUND");
         }
 
+        [TestMethod] //NEED TO ASK A QUESTION ABOUT THIS ONE
+        public void IndividualPurchase_SoldOutTest()
+        {
+            //Arrange
+            Catering purchaseTest = new Catering();
+            CateringItem testItem = new CateringItem();
+            testItem.QuantityRemaining = 0;
+
+            //Act
+            string result = purchaseTest.PurchaseIndividualItem("B3", 25);
+
+            //Assert
+            Assert.AreEqual(result, "SOLD OUT");
+        }
+
+        [TestMethod] // GOING TO HAVE THE SAME PROBLEM AS SOLD OUT TEST
+        public void IndividualPurchase_InsuffucientStockTest()
+        {
+            //Arrange
+            Catering purchaseTest = new Catering();
+
+            //Act
+            string result = purchaseTest.PurchaseIndividualItem("B3", 10);
+
+            //Assert
+            Assert.AreEqual(result, "PRODUCT CODE NOT FOUND");
+        }
+
+        [TestMethod] // GOING TO HAVE THE SAME PROBLEM AS SOLD OUT TEST
+        public void IndividualPurchase_InsuffucientFundsTest()
+        {
+            //Arrange
+            Catering purchaseTest = new Catering();
+
+
+            //Act
+            string result = purchaseTest.PurchaseIndividualItem("B1", 20);
+
+            //Assert
+            Assert.AreEqual(result, "INSUFFICIENT FUNDS");
+        }
 
 
         //PrintPurchases tests
@@ -96,7 +182,7 @@ using System.Text;
         //CalculateChange tests
 
         [TestMethod]
-        public void CalculateChangeTest()
+        public void CalculateChangeTest_1()
         {
             //Arrange
             Catering changeTest = new Catering();
@@ -111,7 +197,6 @@ using System.Text;
             compareList.Add(0);
             compareList.Add(0);
 
-
             //Act
             result = changeTest.CalculateChange(20);
 
@@ -119,8 +204,97 @@ using System.Text;
             CollectionAssert.AreEqual(result, compareList);
         }
 
+        [TestMethod]
+        public void CalculateChangeTest_2()
+        {
+            //Arrange
+            Catering changeTest = new Catering();
+            List<int> result = new List<int>();
+            List<int> compareList = new List<int>();
 
+            compareList.Add(18);
+            compareList.Add(0);
+            compareList.Add(1);
+            compareList.Add(3);
+            compareList.Add(1);
+            compareList.Add(2);
+            compareList.Add(0);
 
+            //Act
+            result = changeTest.CalculateChange(368.45M);
+
+            //Assert
+            CollectionAssert.AreEqual(result, compareList);
+        }
+
+        [TestMethod]
+        public void CalculateChangeTest_3()
+        {
+            //Arrange
+            Catering changeTest = new Catering();
+            List<int> result = new List<int>();
+            List<int> compareList = new List<int>();
+
+            compareList.Add(2);
+            compareList.Add(0);
+            compareList.Add(0);
+            compareList.Add(2);
+            compareList.Add(3);
+            compareList.Add(1);
+            compareList.Add(1);
+
+            //Act
+            result = changeTest.CalculateChange(42.90M);
+
+            //Assert
+            CollectionAssert.AreEqual(result, compareList);
+        }
+
+        [TestMethod]
+        public void CalculateChangeTest_4()
+        {
+            //Arrange
+            Catering changeTest = new Catering();
+            List<int> result = new List<int>();
+            List<int> compareList = new List<int>();
+
+            compareList.Add(128);
+            compareList.Add(1);
+            compareList.Add(1);
+            compareList.Add(4);
+            compareList.Add(1);
+            compareList.Add(1);
+            compareList.Add(0);
+
+            //Act
+            result = changeTest.CalculateChange(2579.35M);
+
+            //Assert
+            CollectionAssert.AreEqual(result, compareList);
+        }
+
+        [TestMethod]
+        public void CalculateChangeTest_5()
+        {
+            //Arrange
+            Catering changeTest = new Catering();
+            List<int> result = new List<int>();
+            List<int> compareList = new List<int>();
+
+            compareList.Add(61);
+            compareList.Add(1);
+            compareList.Add(0);
+            compareList.Add(4);
+            compareList.Add(2);
+            compareList.Add(0);
+            compareList.Add(0);
+
+            //Act
+            result = changeTest.CalculateChange(1234.50M);
+
+            //Assert
+            CollectionAssert.AreEqual(result, compareList);
+        }
 
 
         //BalanceToZero tests
@@ -155,13 +329,13 @@ using System.Text;
             testItem.Price = (decimal)1.50;
 
             //Act
-           balanceTest.UpdateBalance(testItem, 20);
+            balanceTest.UpdateBalance(testItem, 20);
 
             //Assert
             Assert.AreEqual(balanceTest.Balance, 470);
         }
 
-      
+
 
 
 
