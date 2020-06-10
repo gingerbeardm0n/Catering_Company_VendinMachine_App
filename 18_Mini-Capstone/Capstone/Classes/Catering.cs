@@ -61,9 +61,9 @@ namespace Capstone.Classes
         {
             foreach (CateringItem itemObj in items)
             {
-
-
-                if ((productCode == itemObj.Code) && (itemObj.QuantityRemaining >= intQuantityDesired) && ((intQuantityDesired * itemObj.Price) < Balance))
+                
+                if ((productCode == itemObj.Code) && (itemObj.QuantityRemaining >= intQuantityDesired) && 
+                    ((intQuantityDesired * itemObj.Price) < Balance))
                 {
 
                    itemObj.IntQuantityDesired = intQuantityDesired;

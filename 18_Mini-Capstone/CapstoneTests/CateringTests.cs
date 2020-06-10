@@ -105,11 +105,11 @@ namespace CapstoneTests
         {
             //Arrange
             Catering purchaseTest = new Catering();
-            CateringItem testItem = new CateringItem();
-            testItem.QuantityRemaining = 0;
 
             //Act
-            string result = purchaseTest.PurchaseIndividualItem("B3", 25);
+            purchaseTest.AddMoney("1000");
+            string result = purchaseTest.PurchaseIndividualItem("B3", 50);
+            result = purchaseTest.PurchaseIndividualItem("B3", 1);
 
             //Assert
             Assert.AreEqual(result, "SOLD OUT");
