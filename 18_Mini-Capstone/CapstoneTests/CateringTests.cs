@@ -26,6 +26,20 @@ namespace CapstoneTests
         }
 
         [TestMethod]
+        public void AddMoney_DoItTwice()
+        {
+            //Arrange
+            Catering moneyTest = new Catering();
+
+            //Act
+            string result = moneyTest.AddMoney("500");
+            result = moneyTest.AddMoney("750");
+
+            //Assert
+            Assert.AreEqual(result, "Your account balance is: $1250");
+        }
+
+        [TestMethod]
         public void AddMoney_OutOfSpecifiedRangeTest()
         {
             //Arrange
@@ -69,13 +83,11 @@ namespace CapstoneTests
             Assert.AreEqual(result, "You must enter an integer");
             Assert.AreEqual(result2, "You must enter an integer");
         }
-
-
-
+        
         //---------- PurchaseIndividualItem Tests ------------------------------------------------------------------------------------------
 
         [TestMethod]
-        public void IndividualPurchase_ItemAddedToCartTest()
+        public void PurchaseIndividualItem_ItemAddedToCartTest()
         {
             //Arrange
             Catering purchaseTest = new Catering();
@@ -88,7 +100,7 @@ namespace CapstoneTests
         }
 
         [TestMethod]
-        public void IndividualPurchase_ProductCodeNotFoundTest()
+        public void PurchaseIndividualItem_ProductCodeNotFoundTest()
         {
             //Arrange
             Catering purchaseTest = new Catering();
@@ -100,8 +112,8 @@ namespace CapstoneTests
             Assert.AreEqual(result, "PRODUCT CODE NOT FOUND");
         }
 
-        [TestMethod] //NEED TO ASK A QUESTION ABOUT THIS ONE
-        public void IndividualPurchase_SoldOutTest()
+        [TestMethod]
+        public void PurchaseIndividualItem_SoldOutTest()
         {
             //Arrange
             Catering purchaseTest = new Catering();
@@ -115,35 +127,37 @@ namespace CapstoneTests
             Assert.AreEqual(result, "SOLD OUT");
         }
 
-        [TestMethod] // GOING TO HAVE THE SAME PROBLEM AS SOLD OUT TEST
-        public void IndividualPurchase_InsuffucientStockTest()
+        [TestMethod]
+        public void PurchaseIndividualItem_InsuffucientStockTest()
         {
             //Arrange
             Catering purchaseTest = new Catering();
 
             //Act
-            string result = purchaseTest.PurchaseIndividualItem("B3", 10);
+            purchaseTest.AddMoney("1000");
+            string result = purchaseTest.PurchaseIndividualItem("B3", 35); 
+            result = purchaseTest.PurchaseIndividualItem("B3", 25);
 
             //Assert
-            Assert.AreEqual(result, "PRODUCT CODE NOT FOUND");
+            Assert.AreEqual(result, "INSUFFICIENT STOCK");
         }
 
-        [TestMethod] // GOING TO HAVE THE SAME PROBLEM AS SOLD OUT TEST
-        public void IndividualPurchase_InsuffucientFundsTest()
+        [TestMethod]
+        public void PurchaseIndividualItem_InsuffucientFundsTest()
         {
             //Arrange
             Catering purchaseTest = new Catering();
-
-
+            
             //Act
-            string result = purchaseTest.PurchaseIndividualItem("B1", 20);
+            purchaseTest.AddMoney("500");
+            string result = purchaseTest.PurchaseIndividualItem("E3", 49);
 
             //Assert
             Assert.AreEqual(result, "INSUFFICIENT FUNDS");
         }
 
 
-        //PrintPurchases tests
+        //---------- PrintPurchases Tests -----------------------------------------------------------------------------------
 
         [TestMethod]
         public void PrintPurchasesTest()
